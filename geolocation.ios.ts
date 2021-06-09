@@ -1,6 +1,6 @@
 import { Accuracy } from "@nativescript/core/ui/enums";
 import { setTimeout, clearTimeout } from "@nativescript/core/timer";
-import { on as applicationOn, uncaughtErrorEvent, UnhandledErrorEventData } from "@nativescript/core/application";
+import { Application, UnhandledErrorEventData } from "@nativescript/core";
 
 import {
     LocationBase,
@@ -223,7 +223,7 @@ export function watchLocation(successCallback: successCallbackType,
     options: Options): number {
     if (!attachedForErrorHandling) {
         attachedForErrorHandling = true;
-        applicationOn(uncaughtErrorEvent, errorHandler.bind(this));
+        Application.on(Application.uncaughtErrorEvent, errorHandler.bind(this));
     }
 
     let zonedSuccessCallback = (<any>global).zonedCallback(successCallback);
