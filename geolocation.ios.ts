@@ -1,6 +1,6 @@
 import { Accuracy } from "@nativescript/core/ui/enums";
 import { setTimeout, clearTimeout } from "@nativescript/core/timer";
-import { Application, UnhandledErrorEventData } from "@nativescript/core";
+import { Application, UnhandledErrorEventData, Device } from "@nativescript/core";
 
 import {
     LocationBase,
@@ -12,13 +12,13 @@ import {
     successCallbackType,
     errorCallbackType
 } from "./location-monitor";
-import * as Platform from "platform";
 
 const locationManagers = {};
 const locationListeners = {};
 let watchId = 0;
 let attachedForErrorHandling = false;
 
+@NativeClass()
 class LocationListenerImpl extends NSObject implements CLLocationManagerDelegate {
     public static ObjCProtocols = [CLLocationManagerDelegate]; // tslint:disable-line:variable-name
 
@@ -140,7 +140,7 @@ function errorHandler(errData: UnhandledErrorEventData) {
 }
 
 function getVersionMaj () {
-    return parseInt(Platform.device.osVersion.split(".")[0]);
+    return parseInt(Device.osVersion.split(".")[0]);
 }
 
 // options - desiredAccuracy, updateDistance, minimumUpdateTime, maximumAge, timeout
